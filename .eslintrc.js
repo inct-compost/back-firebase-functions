@@ -34,5 +34,7 @@ module.exports = {
     'no-unexpected-multiline': 'error',
     'no-unreachable': 'error',
     'object-curly-spacing': ['error', 'always'],
+    'max-len': 'off',
+    'indent': ['error', 2],
   },
 }
