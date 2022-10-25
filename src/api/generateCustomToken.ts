@@ -13,6 +13,14 @@ export const generateCustomToken = functions.https.onRequest(async (req, res) =>
   const mac = req.query.mac
   const pass = req.query.pass
 
+
+  const additionalClaims = {
+    /**
+     * セキュリティルールの中で `auth`, `request.auth` オブジェクトを使用可能にするフラグ
+     */
+    premiumAccount: true,
+  }
+
   if (!mac && !pass && !id) {
     res.status(400).send('Request information is missing')
   }
@@ -32,7 +40,7 @@ export const generateCustomToken = functions.https.onRequest(async (req, res) =>
     if (hardwareData.mac === mac && hardwareData.password === pass) {
       // macアドレスを元にしたJWT形式のトークンを発行する
       admin.auth()
-        .createCustomToken(mac)
+        .createCustomToken(mac, additionalClaims)
         .then((customToken) => {
           res.status(200).send(customToken)
         })
