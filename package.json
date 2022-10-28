@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
     "build": "tsc --watch --preserveWatchOutput",
-    "dev": "yarn build | firebase emulators:start --only functions",
+    "dev": "yarn build | firebase emulators:start --only functions,firestore,auth",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

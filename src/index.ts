@@ -6,3 +6,4 @@ admin.initializeApp({
 })
 
 export * from './api/generateCustomToken'
+export * from './api/addSensingData'

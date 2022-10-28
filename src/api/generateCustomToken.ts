@@ -40,7 +40,7 @@ export const generateCustomToken = functions.https.onRequest(async (req, res) =>
     if (hardwareData.mac === mac && hardwareData.password === pass) {
       // macアドレスを元にしたJWT形式のトークンを発行する
       admin.auth()
-        .createCustomToken(mac, additionalClaims)
+        .createCustomToken(id, additionalClaims)
         .then((customToken) => {
           res.status(200).send(customToken)
         })
@@ -53,4 +53,6 @@ export const generateCustomToken = functions.https.onRequest(async (req, res) =>
   } else {
     res.status(400).send('Mac address format is not a string type')
   }
+
+  return
 })
