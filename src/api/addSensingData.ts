@@ -26,7 +26,7 @@ export const addSensingData = functions.https.onRequest(async (req, res) => {
     if (id) {
       const ref = firestore.collection('sensingData').doc(id).collection(datetime.date).doc(datetime.time)
       await ref.set({
-        date: data.date,
+        date: new Date(data.date),
         humidity: data.humidity,
         temperature: data.temperature,
       }).then((WriteResult) => {
