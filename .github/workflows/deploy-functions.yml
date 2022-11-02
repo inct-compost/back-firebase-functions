@@ -12,6 +12,12 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@main
+      - name: Translate secrets of base64 into json
+        env:
+          ADMIN_SDK_TOKEN: ${{ secrets.ADMIN_SDK_TOKEN }}
+
+        run: |
+          echo-n $ADMIN_SDK_TOKEN | base64 --decode > ./src/admin-sdk-token.key.json
       - name: Install Dependencies
         run: yarn install --immutable --immutable-cache --check-cache
       - name: Build
