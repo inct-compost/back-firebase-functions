@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { checkCustomToken } from './checkCustomToken'
+import { checkCustomToken } from '../scripts/checkCustomToken'
 
 export const addSensingData = functions.https.onRequest(async (req, res) => {
   interface SensingDataInterface {
@@ -16,14 +16,14 @@ export const addSensingData = functions.https.onRequest(async (req, res) => {
 
   const firestore = admin.firestore()
 
-  const jwtToken: string = req.body.token
+  const idToken: string = req.body.token
   const datetime: DateTimeInterface = req.body.datetime
   const data: SensingDataInterface = req.body.data
 
-  if (typeof jwtToken === 'string') {
-    const id = await checkCustomToken(jwtToken)
+  if (typeof idToken === 'string') {
+    const id = await checkCustomToken(idToken)
 
-    if (id) {
+    if (id && id !== 'tokenReissue') {
       const ref = firestore.collection('sensingData').doc(id).collection(datetime.date).doc(datetime.time)
       await ref.set({
         date: new Date(data.date),
@@ -34,8 +34,10 @@ export const addSensingData = functions.https.onRequest(async (req, res) => {
       }).catch((error) => {
         res.status(500).send(`Error adding sensing data: ${error}`)
       })
+    } else if (id === 'tokenReissue') {
+      res.status(403).send('tokenReissue')
     } else {
-      res.send(403).send('This token is invalid')
+      res.status(403).send('This token is invalid')
     }
   } else {
     res.status(400).send('Jwt Token format is not a string type')
