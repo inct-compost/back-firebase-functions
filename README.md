@@ -1,4 +1,4 @@
-# <div style="text-align: center;">hard-data-transmission</div>
+# <div style="text-align: center;">back-firebase-functions</div>
 <!-- <p align="center">
   <img src="/static/icon.png"  width="256" height="256" alt="nuxt-firebase logo">
 </p>
@@ -6,8 +6,6 @@
 ## Description
 ハードウェアとFirebaseとの橋渡しを担うFirebase-functionsプロジェクト<br>
 カスタムトークンの生成やFirestoreへのデータ追加プログラム
-
-**This repository sends requests to the back-end server of [back-firebase-functions](https://github.com/inct-compost/back-firebase-functions) to authenticate and add data**
 
 ## Dependencies / DevDependencies
 | name | version |
