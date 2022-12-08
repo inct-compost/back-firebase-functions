@@ -8,3 +8,4 @@ admin.initializeApp({
 export * from './api/generateCustomToken'
 export * from './api/addSensingData'
 export * from './api/checkIdToken'
+export * from './api/addHardwareId'
