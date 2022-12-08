@@ -8,9 +8,9 @@ export const addHardwareId = functions.https.onCall(async (data, context) => {
     uuid: string
   }
 
-  const mac = data.mac
-  const id = data.id
-  const pass = data.password
+  const mac = data.mac._value
+  const id = data.id._value
+  const pass = data.password._value
 
   if (!mac && !pass && !id && typeof id === 'string') {
     return {
@@ -32,6 +32,7 @@ export const addHardwareId = functions.https.onCall(async (data, context) => {
   if (hardwareData.mac === mac && hardwareData.password === pass) {
     const uid = context.auth?.uid
 
+    console.log(uid)
     if (uid) {
       // sensingDataのテーブルにアクセス可能なuid配列に、この関数を呼びだしたアカウントを追加する
       await admin.firestore().collection('sensingData').doc(id).update({
