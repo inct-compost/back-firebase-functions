@@ -1,4 +1,4 @@
-# <div style="text-align: center;">hard-data-transmission</div>
+# <div style="text-align: center;">back-firebase-functions</div>
 <!-- <p align="center">
   <img src="/static/icon.png"  width="256" height="256" alt="nuxt-firebase logo">
 </p>
