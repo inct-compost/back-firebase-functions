@@ -22,7 +22,9 @@ export const addHardwareId = functions.https.onCall(async (data, context) => {
   /**
    * idで指定したFirestoreドキュメントの情報をすべて取得
    */
-  const hardwareDataResult = await admin.firestore().collection('hardwareData').doc(id).get()
+  const hardwareDataResult = await admin.firestore().collection('hardwareData').doc(id).get().catch((err) => {
+    throw new functions.https.HttpsError('invalid-argument', 'Either or both the id entered is incorrect')
+  })
   /**
    * hardwareDataResultのデータのみ
    */
@@ -40,7 +42,7 @@ export const addHardwareId = functions.https.onCall(async (data, context) => {
       })
 
       // 関数を呼び出したアカウントのユーザー情報に、アクセスができるhardwareのIDを追加する
-      await admin.firestore().collection('userData').doc(uid).update({
+      await admin.firestore().collection('userData').doc(uid).set({
         hardwareIds: admin.firestore.FieldValue.arrayUnion(id),
       }).then(() => {
         return {
@@ -55,9 +57,6 @@ export const addHardwareId = functions.https.onCall(async (data, context) => {
       resText: 'Password or mac address not match',
     }
   } else {
-    return {
-      status: 403,
-      resText: 'Password or mac address not match',
-    }
+    throw new functions.https.HttpsError('invalid-argument', 'Either or both the mac address or password entered is incorrect')
   }
 })
